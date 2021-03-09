@@ -1,0 +1,24 @@
+#!/bin/env bash
+case $1 in
+    -l)
+       echo "WALLPAPERS" $WALLPAPERS
+       gsettings set org.gnome.desktop.background picture-uri "'file://$WALLPAPERS/white-stars.png'"
+       gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"
+       cat ~/.lyx/light-mode.prf > ~/.lyx/preferences
+       echo "(load-theme 'doom-solarized-light t)" >> ~/.emacs.d/init.el
+       emacsclient -e "(disable-theme 'doom-city-lights)"
+       emacsclient -e "(load-theme 'doom-solarized-light t)"
+       gsettings set org.gnome.gedit.preferences.editor scheme 'solarized-light'
+
+       ;;
+    -d)
+       echo "WALLPAPERS" $WALLPAPERS
+       gsettings set org.gnome.desktop.background picture-uri "'file://$WALLPAPERS/Stars-Black.png'"
+       gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+       cat ~/.lyx/dark-mode.prf > ~/.lyx/preferences
+       sed -i "/(load-theme 'doom-solarized-light t)/d" ~/.emacs.d/init.el
+       emacsclient -e "(disable-theme 'doom-solarized-light)"
+       emacsclient -e "(load-theme 'doom-city-lights t)"
+       gsettings set org.gnome.gedit.preferences.editor scheme 'solarized-dark'
+       ;;
+esac

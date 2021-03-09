@@ -1,0 +1,76 @@
+#!/bin/bash
+
+sink_num_file=$(tempfile)
+change=5
+
+
+case $1 in
+    '-a'|'--app')
+
+        app_name="$2"
+
+        current_sink_num=''
+        sink_num_check=''
+        app_name_check=''
+        sink_num=''
+
+        # Loop through all lines of the list output
+        pactl list sink-inputs | while read line; do
+            # Keep the value of the current sink number the properties refer to, by checking for the pattern and updating the value whenever you find a new one
+
+            sink_num_check=$(echo "$line" | sed -rn 's/^Sink Input #(.*)/\1/p')
+            if [ "$sink_num_check" != "" ]; then # If the current line is a sink number
+                current_sink_num="$sink_num_check" # then set it as the sink number for the next read properties
+            else # otherwise,
+                app_name_check=$(echo "$line" |sed -rn 's/application.name = "([^"]*)"/\1/p') # extract application name (if N/A output null)
+                if [ "$app_name_check" = "$app_name" ]; then # And if it matches the desired application
+                    echo "$current_sink_num" > "$sink_num_file" # keep it
+                    sink_num=$current_sink_num
+                    echo "$current_sink_num" "$app_name_check"
+                fi
+            fi
+        done
+        echo "$sink_num"
+
+        if [ -z "$(cat "$sink_num_file")" ]; then
+            echo "Cannot find the desired app. Aborting"
+            exit 1
+        fi
+
+        shift
+        shift
+    ;;
+esac
+
+sink_num=$(cat "$sink_num_file")
+echo $1
+echo "$sink_num"
+
+case "$1" in
+    "up")
+        if [ -z "$sink_num" ]; then
+            amixer -q sset Master $change%+ unmute
+        else
+            echo pactl set-sink-input-volume $sink_num +$change%
+            pactl set-sink-input-volume $sink_num +$change%
+        fi
+        ;;
+    "down")
+        echo down
+        echo "$sink_num"
+        if [ -z "$sink_num" ]; then
+            amixer -q sset Master $change%- unmute
+        else
+            pactl set-sink-input-volume $sink_num -$change%
+        fi
+        ;;
+    'mute')
+        echo down
+        echo "$sink_num"
+        if [ -z "$sink_num" ]; then
+            amixer -q sset Master 0%
+        else
+            pactl set-sink-input-volume $sink_num 0%
+        fi
+        ;;
+esac

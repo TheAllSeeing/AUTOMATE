@@ -1,0 +1,40 @@
+#!/bin/bash
+
+
+folder="Launch"
+
+case "$1" in
+"-s")
+	folder="Shell"
+	shift
+	;;
+"-l")
+	shift
+	;;
+"-f")
+	folder="Files"
+	shift
+	;;
+"-d")
+	folder="Daemons"
+	shift
+	;;
+*)
+	echo "Invalid argument: $1. Use -s (Shell), -l (Launch), -f (Files), or -d (Daemons)"
+	exit 1
+	;;
+esac
+
+if [ -z "$1" ]; then
+	echo "Please input script name!"
+	exit
+elif which $1; then
+	echo "Script already exist!"
+	exit 2
+else
+	script_path="$BIN/$folder/$1"
+	echo $script_path
+	printf "#!/bin/bash\n" > "$script_path"
+	emacsclient -a emacs -nc "$script_path"
+	chmod +x "$script_path"
+fi 

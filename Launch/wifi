@@ -1,0 +1,89 @@
+#!/bin/bash
+
+home_wifi="Ambus 1"
+school_wifi="Teachers"
+hotspot="The Truth"
+tom="Mentos"
+
+function exists() {
+    echo "Testing for $1"
+    test -n "$(nmcli device wifi list | grep "$1")" && return 0 || return 1
+}
+
+function tryw() {
+    if exists "$1"; then
+        echo "Trying to connect..."
+        if nmcli c up "$1"; then
+            echo "Conencted"
+            return 0
+        else
+            echo "Failed"
+            return 1
+        fi
+    else
+        echo Not found
+        return 1
+    fi
+}
+
+function tryc() {
+   # tryw "$home_wifi" || tryw "$tom" || tryw "$school" || tryw "$hotspot"
+    ~/.local/bin/connect-to-best-wifi.sh
+}
+
+function off() {
+    nmcli radio wifi off
+    echo "Turned wifi off"
+}
+
+function on() {
+    nmcli radio wifi on
+    echo "Turned wifi on"
+}
+
+case $1 in
+    'off')
+        off
+    ;;
+
+    'on')
+        on
+    ;;
+
+    'r')
+        off
+        sleep 5
+        on
+        sleep 4
+        tryc
+    ;;
+
+    'c')
+        nmcli radio wifi on
+        case $2 in
+            'h'|'-h'|'--home')
+                nmcli c up "$home_wifi"
+      		 ;;
+
+            's'|'-s'|'--school')
+                nmcli c up "$school_wifi"
+                ;;
+
+            'p'|'-p'|'--phone')
+                nmcli c up "$hotspot"
+                if [ ! "$1" =  "zoom" ]; then
+                   sleep $((60 * 60))
+                   nmcli c down "$hotspot"
+                fi
+                ;;
+            ''|'-a'|'--auto')
+                tryc
+                ;;
+            *)
+                nmcli c up "$2"
+                ;;
+        esac
+
+    ;;
+
+esac

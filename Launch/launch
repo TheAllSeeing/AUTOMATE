@@ -1,0 +1,101 @@
+#!/bin/bash
+
+
+# --- Complex Functions ---
+function fish() {
+
+	# If a fish terminal is open in the same workspace, focus on it
+	# Else, open a new one.
+
+	echo "Fish ID $FISH_WINDOW_ID"
+
+	echo 'Finding fish window'
+	if focus -n "$FISH_WINDOW_ID"; then
+		echo "Found"
+	else
+		gnome-terminal --window -- "fish"
+		echo "Could not find fish. Opened a new terminal"
+	fi
+}
+
+
+function ipython() {
+
+	# If an IPython terminal is open in the same workspace, focus on it
+	# Else, open a new one.
+
+	echo "Py ID $IPYTHON_ID"
+
+	echo 'Finding IPython window'
+	if focus -n "$IPYTHON_ID"; then
+		echo "Found"
+	else
+		gnome-terminal --window -- "ipython3"
+		echo "Could not find IPython. Opened a new terminal"
+	fi
+}
+
+function prompt-press() {
+	test_file="/tmp/.key_press_wait"
+	id="prompt"
+	if cat "$test_file" | grep "$id" ; then
+        echo "Executing: gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell --method org.gnome.Shell.Eval string:'Main.openRunDialog();'"
+        cat "$test_file"
+        gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell --method org.gnome.Shell.Eval string:'Main.openRunDialog();'
+    else
+        echo "Waiting for second press"
+        echo "$id" >> "$test_file"
+        echo "Wrote."
+        sleep .5
+        cat /dev/null > "$test_file"
+        echo "Overwrote"
+    fi
+}
+
+
+function control {
+	lyx -r ~/Projects/CONTROL/Status.lyx &
+	lyx -r ~/Projects/CONTROL/Progress\ Reports/daily.lyx &
+	lyx -r ~/Projects/CONTROL/Progress\ Reports/weekly.lyx &
+	lyx -r ~/Projects/CONTROL/Progress\ Reports/month.lyx &
+	lyx -r ~/Projects/CONTROL/Progress\ Reports/season.lyx &
+
+	okular ~/Projects/CONTROL/Status.pdf ~/Projects/CONTROL/Progress\ Reports/daily.pdf ~/Projects/CONTROL/Progress\ Reports/weekly.pdf   ~/Projects/CONTROL/Progress\ Reports/month.pdf ~/Projects/CONTROL/Progress\ Reports/season.pdf &
+}
+
+
+# ------
+
+# --- File Handling ---
+if [[ $1 == *.desktop ]]; then
+	TYPE=$(grep '^Type' "$1" | tail -1 | sed 's/^Type=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
+
+	case $TYPE in
+	"Application")
+		eval $(grep '^Exec' "$1" | tail -1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g') ;;
+	"Link")
+		URL=$(grep '^URL' "$1" | tail -1 | sed 's/^URL=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
+		google-chrome "$URL" ;;
+	esac
+
+# -------
+else
+
+
+# --- Simple functions ---
+
+# declare -A launchers=(
+# 	["example"]="echo example command"
+# ) # Dictionary for short commands.
+
+# if [ -n  "${launchers[$1]}"]; then
+# 	echo "$1" found in minimal launchers.
+# 	eval "${launchers[$1]}"
+# ------
+
+# --- Complex Function ---
+# else
+	echo evaluating "$1"
+	eval "$1"
+# ------
+fi

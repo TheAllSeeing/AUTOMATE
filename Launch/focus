@@ -1,0 +1,43 @@
+#!/bin/bash
+
+workspace=$(wmctrl -d | grep '*' | cut -d ' ' -f1)
+name="$1"
+
+echo "Workspace: $workspace"
+
+if [ -z $2 ] && [ -n $1 ]; then
+    echo "Class: $name"
+    echo "Checling by class"
+    wins=$(wmctrl -lx | awk -v w="$workspace" -v name="$name" '$3==name && ($2==0 || $2==w){print $1}');
+    echo "WINS: $wins"
+else
+    name="$2"
+    case "$1" in
+        '-c' | '--class'| '')
+            echo "Class: $name"
+            echo "Checling by class"
+            wins=$(wmctrl -lx | awk -v w="$workspace" -v name="$name" '$3==name && ($2==0 || $2==w){print $1}');
+            echo "WINS: $wins"
+            ;;
+        '-n' | '--name')
+            echo "Name: $name"
+            echo "Checking by name..."
+            wins=$(wmctrl -l | awk -v w="$workspace" -v name="$name" '$0 ~ name && $2 == w{print $1}')
+            echo "WINS: $wins"
+            ;;
+        *)
+            echo Invalid option: "$1". 'use "-c" (--class) or "-n" (--name)'
+            ;;
+    esac
+fi
+
+
+if [ -z "$wins" ]; then
+    exit 1
+fi
+
+echo $wins | while read win; do
+    wmctrl -ia "$win"
+done
+
+exit $?

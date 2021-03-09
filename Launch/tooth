@@ -1,0 +1,83 @@
+#!/bin/bash
+
+earbuds="98:52:3D:14:89:D7"
+default="$earbuds"
+
+get-id() {
+    case "$1" in
+    'e'|'-e'|'--earbuds')
+        echo "$earbuds"
+        ;;
+    ''|'-d'|'--default')
+        echo "$default"
+        ;;
+    esac
+}
+
+on() {
+    bluetoothctl power on
+}
+
+off() {
+    bluetoothctl power off
+}
+
+connect() {
+    bluetoothctl connect $(get-id $1)
+}
+
+disconnect() {
+    bluetoothctl disconnect $(get-id $1)
+}
+
+restart() {
+    off
+    sleep 5
+    on
+    connect
+}
+
+pair() {
+    id=$(get-id $1)
+    bluetoothctl trust $id
+    bluetoothctl pair $id
+}
+
+unpair() {
+    bluetoothctl remove $(get-id $1)
+}
+
+repair() {
+    unpair $1
+    sleep 3
+    pair $1
+}
+
+
+case "$1" in
+'c'|'connect')
+    shift
+    connect $@ || restart $1 # || repair $1 || echo "There was some error, sorry!"
+    ;;
+'d'|'disconnect')
+    shift
+    disconnect $@
+    ;;
+'on')
+    on
+    ;;
+'off')
+    off
+    ;;
+'r'|'restart')
+    shift
+    restart $@
+    ;;
+'p'|'pair')
+    shift
+    pair $@
+    ;;
+'u'|'unpair')
+    shift
+    unpair $@
+esac

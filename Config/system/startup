@@ -1,0 +1,13 @@
+#!/bin/bash
+/home/atai/Code-Orange\ \(TECH\)/AUTOMATE/Daemons/update-lyx.sh &
+watch -n 60 $BIN/Launch/wifi c &>/dev/null &
+launch $LAPPS/pavucontrol.desktop &
+google-drive-ocamlfuse /home/atai/Code-Steel\ \(ORG\)/ACCESS/Drive/
+lyx -r ~/Projects/CONTROL/Status.lyx ~/Projects/CONTROL/Progress\ Reports/.daily.lyx &
+okular -r ~/Projects/CONTROL/Status.pdf &
+/opt/google/chrome/google-chrome --app=https://web.whatsapp.com/ &
+spotify &
+telegram &
+google-chrome &
+xcape -e "Shift_L=Alt_L|Control_R|Shift_L|1"
+xcape -e "Shift_R=Alt_L|Control_R|Shift_L|1"
