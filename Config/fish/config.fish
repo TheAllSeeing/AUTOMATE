@@ -16,8 +16,8 @@ end
 
 
 # ===APP CONFIGURATION===
-set -x FISH_ID=xPV2iC # Fish window title identifier (see launch fish)
-set -x IPYTHON_ID=wS77gy # IPythin window title identifier (see launch ipython)
+set -x FISH_ID xPV2iC # Fish window title identifier (see launch fish)
+set -x IPYTHON_ID wS77gy # IPythin window title identifier (see launch ipython)
 # ======
 
 
