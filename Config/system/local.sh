@@ -45,3 +45,7 @@ function sudo() {
 function open() {
     xdg-open $@
 }
+
+# System-Specific App Configurations
+source /usr/share/undistract-me/long-running.bash
+notify_when_long_running_commands_finish_install
