@@ -15,11 +15,45 @@ end
 
 
 
-# Directory Variables sourced from ~/.profile
-# PATH sourced from ~/.profile
+# ===APP CONFIGURATION===
+set -x FISH_ID=xPV2iC # Fish window title identifier (see launch fish)
+set -x IPYTHON_ID=wS77gy # IPythin window title identifier (see launch ipython)
+# ======
 
 
 
+# ===DIRECTORY VARIABLES===
+
+# ---Project Directories---
+set -x BIN ~/Projects/AUTOMATE # Personal scripts project [AUTOMATE]
+set -x ARCHIVES Code-Steel\ \(ORG\)/ARCHIVES # Project Archives [ARCHIVE]
+set -x ACCESS ~/Code-Steel\ \(ORG\)/ACCESS # Joint Directories, access points [ACCESS]
+set -x MEDIA ~/Code-Azure\ \(REST\)/MEDIA # Media (Audio, Video, Photo, Prose files) [MEDIA]
+# ------
+
+# ---Filesystem Mounts---
+set -x DRIVE "$ACCESS/Drive" # Google Drive mount
+# ------
+
+# ---Useful Directories---
+set -x FRC $DRIVE/Code-Orange\ \(TECH\)/BUILD/EverGreen\ \#7112/FRC\ 2020-21/צוותים/תוכנה/ # Software Crew drive folder
+set -x WALLPAPERS "$MEDIA/Photos/Wallpapers" # Wallpaper directory
+set -x TEMPLATE ~/.lyx/templates # LyX Templates
+# ------
+
+# ---Installation Homes---
+set -x EMACS_HOME ~/.emacs.d # Emacs Installation Home
+set -x JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/ # Java installation home
+# ------
+# ======
+
+
+# ===PATH ADDITIONS===
+set -gx PATH (echo $BIN/*) $PATH # Personal scripts (all directories under AUTOMATE, colon delimited)
+set -gx PATH $PATH ~/.local/bin # Local bin
+set -gx PATH $PATH $EMACS_HOME/bin # emacs bin
+set -gx PATH $PATH $JAVA_HOME/bin # java bin
+# ======
 
 # FILE VARIABLES
 set -x FISHRC ~/.config/fish/config.fish
