@@ -120,7 +120,6 @@ fi
 . ~/.profile
 
 # CONFIGURATIONS
-eval "$(thefuck --alias)"
 eval "$(hub alias -s)"
 
 # FILE VARIABLES
