@@ -25,6 +25,20 @@ else
             wins=$(wmctrl -l | awk -v w="$workspace" -v name="$name" '$0 ~ name && $2 == w{print $1}')
             echo "WINS: $wins"
             ;;
+        '-cg' | 'gc')
+            echo "Name: $name"
+            echo "Global Search"
+            echo "Checking by class..."
+            wins=$(wmctrl -l | awk -v w="$workspace" -v name="$name" '$3==name{print $1}')
+            echo "WINS: $wins"
+            ;;
+        '-ng' | 'nc')
+            echo "Name: $name"
+            echo "Global Search"
+            echo "Checking by name..."
+            wins=$(wmctrl -l | awk -v w="$workspace" -v name="$name" '$0 ~ name{print $1}')
+            echo "WINS: $wins"
+            ;;
         *)
             echo Invalid option: "$1". 'use "-c" (--class) or "-n" (--name)'
             ;;
