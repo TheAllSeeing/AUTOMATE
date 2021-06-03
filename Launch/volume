@@ -9,22 +9,18 @@ case $1 in
 
         app_name="$2"
 
-        current_sink_num=''
-        sink_num_check=''
-        app_name_check=''
-        sink_num=''
-
         # Loop through all lines of the list output
         pactl list sink-inputs | while read line; do
             # Keep the value of the current sink number the properties refer to, by checking for the pattern and updating the value whenever you find a new one
 
-            sink_num_check=$(echo "$line" | sed -rn 's/^Sink Input #(.*)/\1/p')
+            sink_num_check=$(echo "$line" | sed -rn 's/^Sink Input #(.*)/\1/p') # Filters line that don't start with "Sink Input" (such lines are the start of a new source)
+
             if [ "$sink_num_check" != "" ]; then # If the current line is a sink number
                 current_sink_num="$sink_num_check" # then set it as the sink number for the next read properties
             else # otherwise,
                 app_name_check=$(echo "$line" |sed -rn 's/application.name = "([^"]*)"/\1/p') # extract application name (if N/A output null)
                 if [ "$app_name_check" = "$app_name" ]; then # And if it matches the desired application
-                    echo "$current_sink_num" > "$sink_num_file" # keep it
+                    echo "$current_sink_num" > "$sink_num_file" # keep it in a file (using variables makes a mess with the scopes)
                     sink_num=$current_sink_num
                     echo "$current_sink_num" "$app_name_check"
                 fi
