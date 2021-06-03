@@ -93,7 +93,7 @@ function exa
 
     set home_hidden "wpilib|snap|Shuffleboard"
     set calibre_hidden "metadata*"
-    set type_hidden "*.lyx~|*.lyx#"
+    set type_hidden "*.lyx~|*.lyx#|__pycache__"
 
     # If -a option given, just show all.
     if [ -n "$argv" ] && string match -- "*-*a*" "$argv"
@@ -128,7 +128,7 @@ function ls
     # To avoid repetition, keep filter options as strings and evaluate them dynamically based on working directory.
     set home_options "-I wpilib -I snap -I Shuffleboard"
     set calibre_options "-I metadata*"
-    set type_options "-I \"*.lyx~\" -I \"*.lyx#\""
+    set type_options "-I \"*.lyx~\" -I \"*.lyx#\" -I \"__pycache__\""
 
     # If -a option given, just show all.
     if [ -n "$argv" ] && string match -- "*-*a*" "$argv"

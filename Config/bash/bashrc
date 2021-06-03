@@ -157,7 +157,7 @@ function exa() {
 
     home_hidden="wpilib|snap|Shuffleboard"
     calibre_hidden="metadata*"
-    type_hidden="*.lyx~|*.lyx#"
+    type_hidden="*.lyx~|*.lyx#|__pycache__"
 
 
     # If -a option given, just show all.
@@ -196,7 +196,7 @@ function ls() {
     # To avoid repetition, keep filter options as strings and evaluate them dynamically based on working directory.
     home_options="-I wpilib -I snap -I Shuffleboard"
     calibre_options="-I metadata*"
-    type_options="-I \"*.lyx~\" -I \"*.lyx#\""
+    type_options="-I \"*.lyx~\" -I \"*.lyx#\" -I \"__pycache__\""
 
     # If -a option given, just show all.
     if [ -n "$@" ] && [[ "$@" =~ "-a" ]]; then
