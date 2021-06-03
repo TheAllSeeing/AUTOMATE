@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# TODO add timer format (e.g mm:ss)
+# TODO add custom audio file
+
+function convert_to_seconds() {
+  input="$2"
+  case "$1" in
+    s)
+      echo $2
+      ;;
+    m)
+      echo $((input*60))
+      ;;
+    h)
+      echo $((input*3600))
+      ;;
+  esac
+}
+
+function show_timer() {
+ seconds="$1"
+ end_time_epoch=$(($(date +%s) + $seconds));
+ epoch=$(date +%s)
+ while [ $end_time_epoch -ge $epoch ]; do
+   echo -ne "$(date -u --date @$(($end_time_epoch - $epoch)) +%H:%M:%S)\r";
+   epoch=$(date +%s)
+ done
+}
+
+function play_sound() {
+ play ~/.local/share/timer/end
+}
+
+if [ -z $2 ]; then
+  flag=m
+else
+  flag=$1
+  shift
+fi
+
+clear
+show_timer $(convert_to_seconds $flag $1)
+play_sound
