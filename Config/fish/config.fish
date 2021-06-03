@@ -9,7 +9,7 @@ function git --wraps hub --description 'Alias for hub, which wraps git to provid
 end
 
 function fish_title # Set terminal window title
-    echo "Fish ($FISH_WINDOW_ID)"
+    echo "Fish ($FISH_ID)"
 end
 
 

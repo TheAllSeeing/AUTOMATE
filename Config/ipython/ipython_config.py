@@ -5,7 +5,6 @@ import sys
 
 home = os.environ['HOME']
 home_bin = os.environ['BIN']
-shell_id = "term"
 
 #------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -632,7 +631,3 @@ c.InteractiveShellApp.exec_files = [
 ## If True, any %store-d variables will be automatically restored when IPython
 #  starts.
 #c.StoreMagics.autorestore = False
-
-
-
-sys.stdout.write("\x1b]2;" + shell_id + "\x07")
