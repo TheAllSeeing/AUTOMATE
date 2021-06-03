@@ -2,37 +2,37 @@
 
 
 # --- Complex Functions ---
-function fish() {
 
-	# If a fish terminal is open in the same workspace, focus on it
-	# Else, open a new one.
+launch-shell() {
+    shell_path=$1
+    shell_name=$2
+    shell_id=$3
 
-	echo "Fish ID $FISH_WINDOW_ID"
+	echo "$shell_name ID $shell_id"
 
-	echo 'Finding fish window'
-	if focus -n "$FISH_WINDOW_ID"; then
+	echo "Finding $shell_name window"
+	if focus -n "$shell_id"; then
 		echo "Found"
 	else
-		gnome-terminal --window -- "fish"
-		echo "Could not find fish. Opened a new terminal"
+        if xfce4-terminal -e "tmux -u new $shell_path"  # "sh -c 'tmux set-option default-shell $shell_path && tmux -u'";
+        then
+            until focus -n "$shell_id"; do sleep 0.1; done; # Focus on the terminal when it opens
+            echo "Could not find fish. Opened a new terminal"
+        fi
 	fi
 }
 
+fish() {
+    launch-shell /usr/bin/fish fish $FISH_ID
+}
 
-function ipython() {
 
-	# If an IPython terminal is open in the same workspace, focus on it
-	# Else, open a new one.
+zsh() {
+    launch-shell /usr/bin/zsh Zsh $ZSH_ID
+}
 
-	echo "Py ID $IPYTHON_ID"
-
-	echo 'Finding IPython window'
-	if focus -n "$IPYTHON_ID"; then
-		echo "Found"
-	else
-		gnome-terminal --window -- "ipython3"
-		echo "Could not find IPython. Opened a new terminal"
-	fi
+ipython() {
+    launch-shell /usr/bin/ipython3 IPython $IPYTHON_ID
 }
 
 function prompt-press() {
