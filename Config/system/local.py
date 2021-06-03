@@ -2,3 +2,4 @@
 
 SUDO_COMMAND = "sudo"
 OPEN_COMMAND = "xdg-open"
+URL_COMMAND = "google-chrome"

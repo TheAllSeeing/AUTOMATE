@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/bin/env fish
 
 
 # Localization Standartization parameters: function, directory pointers, path additions
@@ -44,5 +44,17 @@ end
 
 # xdg-open or equivalent pointer
 function open
-    xdg-open $argv
+    xdg-open "$argv"
+end
+
+# Open a url link
+function url
+    google-chrome "$argv"
+end
+
+# Update local configs from github gists
+function update-local
+    wget -O $BIN/Config/system/local.fish https://gist.githubusercontent.com/TheAllSeeing/a37ad2da8d06dbd8aca5ad2d04232b53/raw/c95f2ea49e690fac31cf0f1c3a2bb902ad0787b8/local.fish
+    wget -O $BIN/Config/system/local.py https://gist.github.com/TheAllSeeing/f1021dc01dc7636f00e456ae8b10e70e/raw/dccd67868482e924be62d0b6a8a5f7cd84890991/local.py
+    wget -O $BIN/Config/system/local.sh https://gist.github.com/TheAllSeeing/f1021dc01dc7636f00e456ae8b10e70e/raw/dccd67868482e924be62d0b6a8a5f7cd84890991/local.sh
 end
