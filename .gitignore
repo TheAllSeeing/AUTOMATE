@@ -3,3 +3,5 @@ Tasks.org
 *.org
 
 File Management/__pycache__/
+
+Files/__pycache__/
