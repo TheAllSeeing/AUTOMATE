@@ -82,7 +82,7 @@ if [[ $1 == *.desktop ]]; then
 else
 
 
-# --- Simple functions ---
+# --- Simple Functions ---
 
 # declare -A launchers=(
 # 	["example"]="echo example command"
@@ -93,7 +93,7 @@ else
 # 	eval "${launchers[$1]}"
 # ------
 
-# --- Complex Function ---
+# --- Complex Functions ---
 # else
 	echo evaluating "$1"
 	eval "$1"
