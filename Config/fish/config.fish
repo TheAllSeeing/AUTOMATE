@@ -155,3 +155,20 @@ function ls
 #   Neeed to replace with more proper RegEx (something like -[^-::space::]*a[^-::space::]*)
 
 end
+
+# --- SEARCH ENGINES ---
+function _def_search_engine
+    set engine_name "$argv[1]"
+    set addr "$argv[2]"
+    set search_addr "$argv[2]/$argv[3]"
+    set func "function $engine_name
+             if [ -z \"\$argv\" ]
+                url $addr
+             else
+                url (echo '$search_addr' | sed \"s/%s/\$argv/\")
+             end
+          end"
+    eval "$func"
+end
+
+[ -f ~/.search_engines ] && source ~/.search_engines
