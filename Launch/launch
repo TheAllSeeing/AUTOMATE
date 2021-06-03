@@ -35,7 +35,7 @@ ipython() {
     launch-shell /usr/bin/ipython3 IPython $IPYTHON_ID
 }
 
-function prompt-press() {
+prompt-press() {
 	test_file="/tmp/.key_press_wait"
 	id="prompt"
 	if cat "$test_file" | grep "$id" ; then
@@ -53,14 +53,17 @@ function prompt-press() {
 }
 
 
-function control {
-	lyx -r ~/Projects/CONTROL/Status.lyx &
+control() {
+
+    lyx &
+    sleep 0.5
+
 	lyx -r ~/Projects/CONTROL/Progress\ Reports/daily.lyx &
 	lyx -r ~/Projects/CONTROL/Progress\ Reports/weekly.lyx &
 	lyx -r ~/Projects/CONTROL/Progress\ Reports/month.lyx &
 	lyx -r ~/Projects/CONTROL/Progress\ Reports/season.lyx &
 
-	okular ~/Projects/CONTROL/Status.pdf ~/Projects/CONTROL/Progress\ Reports/daily.pdf ~/Projects/CONTROL/Progress\ Reports/weekly.pdf   ~/Projects/CONTROL/Progress\ Reports/month.pdf ~/Projects/CONTROL/Progress\ Reports/season.pdf &
+	okular ~/Projects/CONTROL/Progress\ Reports/daily.pdf ~/Projects/CONTROL/Progress\ Reports/weekly.pdf   ~/Projects/CONTROL/Progress\ Reports/month.pdf ~/Projects/CONTROL/Progress\ Reports/season.pdf &
 }
 
 
