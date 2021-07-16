@@ -138,6 +138,7 @@ locate = _wrap_command_with_output('locate', seperator='\\n')
 ls = _wrap_command_with_output('ls', seperator='\\n')
 exa = _wrap_command_with_output('exa', default_options='-I "wpilib|Shuffleboard|snap"', seperator='\\n')
 cat = _wrap_command_with_output('cat', seperator='\\n')
+xpaste = _wrap_command_with_output('xclip -sel clip -o')
 
 
 def okular(files, tabs=True):
@@ -148,6 +149,10 @@ def okular(files, tabs=True):
             return os.system('okular ' + ' '.join(files) + ' 2>/dev/null &')
         else:
             return [okular(path) for path in files]
+
+def xcopy(text: str):
+    os.system(f'echo {escape(text)} | xclip -sel clip')
+
 
 
 def ordinal_suffix(date=date.today()):
