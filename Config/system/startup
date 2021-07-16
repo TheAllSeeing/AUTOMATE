@@ -1,10 +1,8 @@
 #!/bin/bash
-/home/atai/Code-Orange\ \(TECH\)/AUTOMATE/Daemons/update-lyx.sh &
+/home/atai/Gray/AUTOMATE/Daemons/update-lyx.sh &
 watch -n 60 $BIN/Launch/wifi c &>/dev/null &
-launch $LAPPS/pavucontrol.desktop &
-google-drive-ocamlfuse /home/atai/Code-Steel\ \(ORG\)/ACCESS/Drive/
-lyx -r ~/Projects/CONTROL/Status.lyx ~/Projects/CONTROL/Progress\ Reports/.daily.lyx &
-okular -r ~/Projects/CONTROL/Status.pdf &
+google-drive-ocamlfuse ~/Gray/FILER/Drive/
+launch control
 /opt/google/chrome/google-chrome --app=https://web.whatsapp.com/ &
 spotify &
 telegram &

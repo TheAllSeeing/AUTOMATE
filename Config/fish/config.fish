@@ -26,9 +26,9 @@ set -x IPYTHON_ID wS77gy # IPythin window title identifier (see launch ipython)
 
 # ---Project Directories---
 set -x BIN ~/Projects/AUTOMATE # Personal scripts project [AUTOMATE]
-set -x ARCHIVES Code-Steel\ \(ORG\)/ARCHIVES # Project Archives [ARCHIVE]
-set -x ACCESS ~/Code-Steel\ \(ORG\)/ACCESS # Joint Directories, access points [ACCESS]
-set -x MEDIA ~/Code-Azure\ \(REST\)/MEDIA # Media (Audio, Video, Photo, Prose files) [MEDIA]
+set -x ARCHIVES Steel/ARCHIVES # Project Archives [ARCHIVE]
+set -x ACCESS ~/Steel/ACCESS # Joint Directories, access points [ACCESS]
+set -x MEDIA ~/Azure/MEDIA # Media (Audio, Video, Photo, Prose files) [MEDIA]
 # ------
 
 # ---Filesystem Mounts---

@@ -58,12 +58,12 @@ control() {
     lyx &
     sleep 0.5
 
-	lyx -r ~/Projects/CONTROL/Progress\ Reports/daily.lyx &
-	lyx -r ~/Projects/CONTROL/Progress\ Reports/weekly.lyx &
-	lyx -r ~/Projects/CONTROL/Progress\ Reports/month.lyx &
-	lyx -r ~/Projects/CONTROL/Progress\ Reports/season.lyx &
+	lyx -r ~/Projects/CONTROL/Statements/Daily.lyx &
+	lyx -r ~/Projects/CONTROL/Statements/Weekly.lyx &
+	lyx -r ~/Projects/CONTROL/Statements/Month.lyx &
+	lyx -r ~/Projects/CONTROL/Statements/Season.lyx &
 
-	okular ~/Projects/CONTROL/Progress\ Reports/daily.pdf ~/Projects/CONTROL/Progress\ Reports/weekly.pdf   ~/Projects/CONTROL/Progress\ Reports/month.pdf ~/Projects/CONTROL/Progress\ Reports/season.pdf &
+	okular ~/Projects/CONTROL/Statements/Daily.pdf ~/Projects/CONTROL/Statements/Weekly.pdf   ~/Projects/CONTROL/Statements/Month.pdf ~/Projects/CONTROL/Statements/Season.pdf &
 }
 
 

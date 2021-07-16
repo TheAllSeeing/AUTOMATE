@@ -192,7 +192,7 @@
  ;; If there is more than one, they won't work right.
  ;; '(org-agenda-files
    ;; (quote
-        ;; ("/home/atai/Code-Steel (ORG)/ACCESS/Agenda")))
+        ;; ("/home/atai/Steel/ACCESS/Agenda")))
 )
 
 (custom-set-faces

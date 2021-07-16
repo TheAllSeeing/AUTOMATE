@@ -4,8 +4,8 @@
 # to pdf (as a file with an identical basename, changing the lyx extension to pdf). This means I can see output continously and
 # not need to
 
-files=$(find ~/Projects -mindepth 1 -maxdepth 1 -not -name "ACCESS" -a -not -name ".git") # All project folders ecvluding ACCESS (as Google Drive mount makes a mess), space delimited
-files="$files $(find ~/Projects/ACCESS -mindepth 1 -maxdepth 1 -type d -and -not -name "Drive" -or -name "*.lyx")" # Add ACCESS subdirectories, excluding the aforementioned drive mount
+files=$(find ~/Projects -mindepth 1 -maxdepth 1 -not -name "FILER" -a -not -name ".git") # All project folders ecvluding ACCESS (as Google Drive mount makes a mess), space delimited
+files="$files $(find ~/Projects/FILER -mindepth 1 -maxdepth 1 -type d -and -not -name "Drive" -and -not -name "Phone" -and -not -name "Windows" -and -not -name "Linux" -or -name "*.lyx")" # Add ACCESS subdirectories, excluding the aforementioned drive mount
 count=0 # count of files compiles, so I can make distinct log files for each one.
 
 # Run whenever a LyX file nested in the home directory is saved, and keep an iteration variable for its path.

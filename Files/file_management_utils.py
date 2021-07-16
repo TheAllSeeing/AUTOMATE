@@ -15,9 +15,8 @@ def get_dossier_paths(at: str='HOME', code: int=0, path_type: int=0, escape_res=
     # code_4 - archived, complete dossiers.
 
     # path_type_0 - path
-    # path_type_1 - filename
-    # path_type_2 - name
-    # path_type_3 - aspect
+    # path_type_1 - name
+    # path_type_2 - aspect
 
     if path_type == 1:
         return [path.split('/')[-1] for path in get_dossier_paths(at, code, 0)]
@@ -28,8 +27,10 @@ def get_dossier_paths(at: str='HOME', code: int=0, path_type: int=0, escape_res=
     working_directory = escape(var(at))
     if 1 <= code <= 4:
             working_directory += '/' + escape(var('ARCHIVES'))
-            
-    res = find(options=working_directory + '/Code* -mindepth 1 -maxdepth 1', escape_res=escape_res)
+
+    dirs_string = ' '.join(get_aspect_paths(at))
+    options_string=dirs_string + ' -mindepth 1 -maxdepth 1 -type d -not -name ".*"'
+    res = find(options=options_string, escape_res=escape_res)
 
     separator = '|'
     if escape_res:
@@ -49,7 +50,8 @@ def get_aspect_paths(at='HOME', archive=False):
     working_directory = escape(var(at))
     if archive:
             working_directory += '/' + escape(var('ARCHIVES'))
-    return find(options=working_directory + ' -maxdepth 1 -name "Code-*(*)"')
+    return find(options=working_directory + ' -mindepth 1 -maxdepth 1 -not -name ".*" -and -not -name "snap" -and -not -name "Projects" -and -not -name "Code-*"')
+
 
 def get_aspect_filenames(at='HOME'):
     return [path.split('/')[3] for path in get_aspect_paths(at)]
@@ -167,10 +169,11 @@ def ordinal_suffix(date=date.today()):
 def convert_pathtype(path, to_type):
     if path.startswith(var('HOME')):
         given_type = 0
-    elif path.startswith('Code-'):
-        given_type = 2
-    else:
+    # Project folders are always all capitalized
+    elif path.upper() == path:
         given_type = 1
+    else:
+        given_type = 2
 
     return get_dossier_paths(path_type=to_type)[get_dossier_paths(path_type=given_type).index(path)]
 
