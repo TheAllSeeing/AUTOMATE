@@ -55,15 +55,30 @@ prompt-press() {
 
 control() {
 
-    lyx &
-    sleep 0.5
-
+    start-lyx
 	lyx -r ~/Projects/CONTROL/Statements/Daily.lyx &
 	lyx -r ~/Projects/CONTROL/Statements/Weekly.lyx &
 	lyx -r ~/Projects/CONTROL/Statements/Month.lyx &
 	lyx -r ~/Projects/CONTROL/Statements/Season.lyx &
 
 	okular ~/Projects/CONTROL/Statements/Daily.pdf ~/Projects/CONTROL/Statements/Weekly.pdf   ~/Projects/CONTROL/Statements/Month.pdf ~/Projects/CONTROL/Statements/Season.pdf &
+}
+
+
+start-lyx() {
+    if [ -f ~/.lyx/lyx.in ] || [ -f ~/.lyx.in ]; then
+        lyx &
+        sleep 0.5
+    fi
+
+    focus lyx.lyx
+
+}
+
+work() {
+    start-lyx
+    lyx -r ~/Projects/CONTROL/Statements/CONFIG.lyx &
+    okular ~/Projects/CONTROL/Statements/CONFIG.pdf &
 }
 
 
