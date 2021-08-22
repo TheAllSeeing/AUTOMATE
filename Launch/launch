@@ -17,7 +17,7 @@ launch-shell() {
         if xfce4-terminal -e "tmux -u new $shell_path"  # "sh -c 'tmux set-option default-shell $shell_path && tmux -u'";
         then
             until focus -n "$shell_id"; do sleep 0.1; done; # Focus on the terminal when it opens
-            echo "Could not find fish. Opened a new terminal"
+            echo "Could not find $shell_name. Opened a new terminal"
         fi
 	fi
 }
