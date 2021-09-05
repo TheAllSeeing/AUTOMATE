@@ -1,0 +1,51 @@
+#!/bin/bash
+
+show_help() {
+    printf  "%s\n"\
+            "Usage:"\
+            "media OPTION"\
+            "__________________________"\
+            "OPTIONS"\
+            "  -h | --help          Print this help and exit"\
+            "  -p | --play   		Play/Pause running media"\
+            "  -n | --next   	    Start playing next track in currently playing / main player"\
+            "  -r | --previous	    Start playing previous track in  currently playing / main player"\
+            "__________________________"\
+            " For this command to work, apropriate macro must be installed "
+}
+
+if [ "$#" -eq 1 ] && [ "$1" == '-h' ] || [ "$#" -eq 1 ] && [ "$1" == "--help" ]; then
+    show_help
+    exit 0
+fi
+
+if echo $PREFIX | grep -vq 'termux'; then
+    echo "Error: This script only works on termux in conjunction with macrodroid."
+    exit 1
+fi
+
+if [ -z "$@" ]; then
+    echo Error: no arguments given
+    exit 1
+fi
+
+if ! [ "$#" -eq 1 ]; then
+    echo Error: too many arguents given. Please usevonly one.
+    exit 1
+fi
+
+case "$1" in
+    -p|--play)
+        am broadcast --user 0 -a MEDIA_PLAY_PAUSE
+        ;;
+    -n|--next)
+        am broadcast --user 0 -a MEDIA_PLAY_NEXT
+        ;;
+    -r|--previous)
+        am broadcast --user 0 -a MEDIA_PLAY_PREV
+        ;;
+    *)
+        echo Error: Unrecognized argumrnt: $1. Use -p, -l or -r
+        show_help
+        ;;
+esac
