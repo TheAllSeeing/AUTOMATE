@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Script wrapper for dynamic search commands from .zshenv. The functions
+# don't really go to the non-interactive shell, so this is a way around that,
+# just adding search before the intended command. Really this is a
+# workaround for ubuntu's quick command, but it also allows the functions
+# to be used in scripts.
+
+engine="$1"
+shift
+
+if  [ "$(awk "/$engine/{print \$2; exit}" $SH_DIR/search-engines.sh)" != "$engine" ]; then
+    echo no search engine found: \"$engine\"
+    exit 1
+fi
+
+. $SH_DIR/search-engines.sh
+eval $engine $@
