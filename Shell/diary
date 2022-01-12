@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/atai/Steel/INSIGHT/Diary/diary.py $@
