@@ -1,2 +1,2 @@
 #!/bin/bash
-/home/atai/Red/SLEEP/InsightDB/sleep.py $@
+~/Red/SLEEP/InsightDB/sleep.py $@

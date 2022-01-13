@@ -1,2 +1,2 @@
 #!/bin/bash
-/home/atai/Gray/CUPBOARD/Things/things.py $@
+~/Gray/CUPBOARD/Things/things.py $@
