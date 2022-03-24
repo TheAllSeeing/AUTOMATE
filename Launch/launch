@@ -38,6 +38,7 @@ ipython() {
 prompt-press() {
 	test_file="/tmp/.key_press_wait"
 	id="prompt"
+    touch "$test_file"
 	if cat "$test_file" | grep "$id" ; then
         echo "Executing: gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell --method org.gnome.Shell.Eval string:'Main.openRunDialog();'"
         cat "$test_file"
