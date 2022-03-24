@@ -1,0 +1,2 @@
+#!/bin/bash
+~/Red/SLEEP/InsightDB/sleep.py $@
