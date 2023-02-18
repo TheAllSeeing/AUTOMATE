@@ -14,7 +14,7 @@ launch-shell() {
 	if focus -n "$shell_id"; then
 		echo "Found"
 	else
-        if xfce4-terminal -e "tmux -u new $shell_path"  # "sh -c 'tmux set-option default-shell $shell_path && tmux -u'";
+        if alacritty -e tmux -u new $shell_path
         then
             until focus -n "$shell_id"; do sleep 0.1; done; # Focus on the terminal when it opens
             echo "Could not find $shell_name. Opened a new terminal"
@@ -22,17 +22,12 @@ launch-shell() {
 	fi
 }
 
-fish() {
-    launch-shell /usr/bin/fish fish $FISH_ID
-}
-
-
 zsh() {
     launch-shell /usr/bin/zsh Zsh $ZSH_ID
 }
 
 ipython() {
-    launch-shell /usr/bin/ipython3 IPython $IPYTHON_ID
+    launch-shell '/usr/bin/ipython3' IPython $IPYTHON_ID
 }
 
 prompt-press() {
@@ -77,8 +72,8 @@ start-lyx() {
 
 work() {
     start-lyx
-    lyx -r ~/Projects/CONTROL/Statements/CONFIG.lyx &
-    okular ~/Projects/CONTROL/Statements/CONFIG.pdf &
+    lyx -r ~/Projects/CONTROL/Statements/CUPBOARD.lyx &
+    okular ~/Projects/CONTROL/Statements/CUPBOARD.pdf &
 }
 
 
@@ -86,14 +81,25 @@ work() {
 
 # --- File Handling ---
 if [[ $1 == *.desktop ]]; then
+
+
 	TYPE=$(grep '^Type' "$1" | tail -1 | sed 's/^Type=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
 
 	case $TYPE in
 	"Application")
 		eval $(grep '^Exec' "$1" | tail -1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g') ;;
 	"Link")
-		URL=$(grep '^URL' "$1" | tail -1 | sed 's/^URL=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
-		google-chrome "$URL" ;;
+        if source ~/Gray/CONFIG/Configs/sh/sh/confdirs.sh; then
+            if source "$SH_DIR/local.sh"; then
+                URL=$(grep '^URL' "$1" | tail -1 | sed 's/^URL=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')
+                url "$URL"
+            else
+                echo error: could not find local.sh to grab url command.
+            fi
+        else
+            echo error: could not find confdirs.sh to locate SH_DIR
+        fi
+        ;;
 	esac
 
 # -------

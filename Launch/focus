@@ -1,11 +1,11 @@
 #!/bin/bash
 
-workspace=$(wmctrl -d | grep '*' | cut -d ' ' -f1)
+workspace=$(wmctrl -d | grep '\*' | cut -d ' ' -f1)
 name="$1"
 
 echo "Workspace: $workspace"
 
-if [ -z $2 ] && [ -n $1 ]; then
+if [ -z $2 ] && [ -n "$1" ]; then
     echo "Class: $name"
     echo "Checling by class"
     wins=$(wmctrl -lx | awk -v w="$workspace" -v name="$name" '$3==name && ($2==0 || $2==w){print $1}');
